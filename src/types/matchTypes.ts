@@ -1,13 +1,19 @@
-interface Competition {
+export interface Country {
   id: number;
   name: string;
 }
 
-interface Match {
+export interface Competition {
+  id: number;
+  name: string;
+}
+
+export interface Match {
   id: number;
   home: { name: string };
   away: { name: string };
   competition: Competition;
+  country: Country;
   time: string;
 }
 
