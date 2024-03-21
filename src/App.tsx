@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Box, SelectChangeEvent, Typography } from '@mui/material';
 import { useGetCompetitions } from './api/competitions';
-import { getLiveMatches } from './api/matches';
+import { getLiveMatches, useGetMatches } from './api/matches';
 import { Match } from './types/matchTypes';
 import CompetitionDropdown from './components/CompetitionDropdown';
 import MatchesList from './components/MatchesList';
 
 function App() {
   const { data: competitions } = useGetCompetitions();
+  const { data: matches, isLoading } = useGetMatches();
   const [selectedCompetition, setSelectedCompetition] = useState('');
   const [filteredMatches, setFilteredMatches] = useState<Match[]>([]);
 
@@ -17,7 +18,7 @@ function App() {
 
   useEffect(() => {
     const fetchAndFilterMatches = async () => {
-      const matches = await getLiveMatches();
+      if (!matches) return;
 
       if (selectedCompetition === 'All') {
         setFilteredMatches(matches);
@@ -31,7 +32,7 @@ function App() {
     };
 
     fetchAndFilterMatches();
-  }, [selectedCompetition]);
+  }, [selectedCompetition, matches]);
 
   return (
     <Box sx={{ padding: '32px' }}>
@@ -46,7 +47,7 @@ function App() {
         handleChange={handleChange}
         competitions={competitions}
       />
-      <MatchesList filteredMatches={filteredMatches} />
+      <MatchesList filteredMatches={filteredMatches} isLoading={isLoading} />
     </Box>
   );
 }
