@@ -16,21 +16,21 @@ function App() {
   };
 
   useEffect(() => {
-    const getAndFilterMatches = async () => {
-      if (!selectedCompetition) {
-        setFilteredMatches([]);
-        return;
-      }
-
+    const fetchAndFilterMatches = async () => {
       const matches = await getLiveMatches();
-      const filtered = matches.filter(
-        (match) =>
-          match.competition.id.toString() === selectedCompetition.toString()
-      );
-      setFilteredMatches(filtered);
+
+      if (selectedCompetition === 'All') {
+        setFilteredMatches(matches);
+      } else {
+        const filtered = matches.filter(
+          (match) =>
+            match.competition.id.toString() === selectedCompetition.toString()
+        );
+        setFilteredMatches(filtered);
+      }
     };
 
-    getAndFilterMatches();
+    fetchAndFilterMatches();
   }, [selectedCompetition]);
 
   return (

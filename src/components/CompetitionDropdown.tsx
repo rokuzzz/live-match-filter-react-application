@@ -35,6 +35,7 @@ function CompetitionDropdown({
           },
         }}
       >
+        <MenuItem value={'All'}>All</MenuItem>
         {competitions?.map((competition) => (
           <MenuItem key={competition.id} value={competition.id}>
             {`${competition.name}, ${competition.countryName}`}
