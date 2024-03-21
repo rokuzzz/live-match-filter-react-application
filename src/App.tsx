@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Box, SelectChangeEvent, Typography } from '@mui/material';
 import { useGetCompetitions } from './api/competitions';
-import { getLiveMatches, useGetMatches } from './api/matches';
+import { useGetMatches } from './api/matches';
 import { Match } from './types/matchTypes';
 import CompetitionDropdown from './components/CompetitionDropdown';
 import MatchesList from './components/MatchesList';
