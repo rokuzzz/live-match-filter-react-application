@@ -12,6 +12,7 @@ export interface Match {
   id: number;
   home: { name: string };
   away: { name: string };
+  scores: { score: string };
   competition: Competition;
   country: Country;
   time: string;
