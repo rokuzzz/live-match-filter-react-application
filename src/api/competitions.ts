@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getLiveMatches } from './matches';
 import { Competition } from '../types/matchTypes';
 
-interface CompetitionWithCountry extends Competition {
+export interface CompetitionWithCountry extends Competition {
   countryName: string;
 }
 

@@ -1,19 +1,10 @@
 import { useState, useEffect } from 'react';
-import {
-  Box,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  List,
-  ListItem,
-  Typography,
-  Paper,
-} from '@mui/material';
+import { Box, SelectChangeEvent, Typography } from '@mui/material';
 import { useGetCompetitions } from './api/competitions';
 import { getLiveMatches } from './api/matches';
 import { Match } from './types/matchTypes';
+import CompetitionDropdown from './components/CompetitionDropdown';
+import MatchesList from './components/MatchesList';
 
 function App() {
   const { data: competitions } = useGetCompetitions();
@@ -50,52 +41,12 @@ function App() {
       >
         Live Competitions
       </Typography>
-      <FormControl fullWidth sx={{ marginTop: '32px', maxWidth: '300px' }}>
-        <InputLabel id='competition-select-label'>Competition</InputLabel>
-        <Select
-          labelId='competition-select-label'
-          id='competition-select'
-          value={selectedCompetition}
-          label='Competition'
-          onChange={handleChange}
-          MenuProps={{
-            PaperProps: {
-              style: {
-                maxHeight: 90,
-              },
-            },
-          }}
-        >
-          {competitions?.map((competition) => (
-            <MenuItem key={competition.id} value={competition.id}>
-              {`${competition.name}, ${competition.countryName}`}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <Paper elevation={12} sx={{ marginTop: '16px', padding: '16px' }}>
-        <Typography variant='h6' sx={{ fontWeight: '700' }}>
-          Matches
-        </Typography>
-        <List>
-          {filteredMatches.length ? (
-            filteredMatches.map((match) => (
-              <ListItem
-                key={match.id}
-                sx={{ margin: '4px 0px', paddingLeft: '0px' }}
-              >
-                <Typography variant='body2'>
-                  {match.home.name} {match.scores.score} {match.away.name}
-                </Typography>
-              </ListItem>
-            ))
-          ) : (
-            <Typography variant='body1'>
-              Competition is not selected.
-            </Typography>
-          )}
-        </List>
-      </Paper>
+      <CompetitionDropdown
+        selectedCompetition={selectedCompetition}
+        handleChange={handleChange}
+        competitions={competitions}
+      />
+      <MatchesList filteredMatches={filteredMatches} />
     </Box>
   );
 }
